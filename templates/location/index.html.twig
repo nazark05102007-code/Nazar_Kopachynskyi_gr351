@@ -26,14 +26,18 @@
                     <td>{{ location.latitude }}</td>
                     <td>{{ location.longitude }}</td>
                     <td>
-                        <a class="btn btn-info btn-sm"
-                           href="{{ path('app_location_show', {'id': location.id}) }}">
-                            Show
-                        </a>
-                        <a class="btn btn-warning btn-sm"
-                           href="{{ path('app_location_edit', {'id': location.id}) }}">
-                            Edit
-                        </a>
+                        {% if is_granted('ROLE_LOCATION_SHOW') %}
+                            <a class="btn btn-info btn-sm"
+                               href="{{ path('app_location_show', {'id': location.id}) }}">
+                                Show
+                            </a>
+                        {% endif %}
+                        {% if is_granted('ROLE_LOCATION_EDIT') %}
+                            <a class="btn btn-warning btn-sm"
+                               href="{{ path('app_location_edit', {'id': location.id}) }}">
+                                Edit
+                            </a>
+                        {% endif %}
                     </td>
                 </tr>
             {% else %}
@@ -44,8 +48,9 @@
             </tbody>
         </table>
     </div>
-
-    <a class="btn btn-primary" href="{{ path('app_location_new') }}">
-        Create new
-    </a>
+    {% if is_granted('ROLE_LOCATION_NEW') %}
+        <a class="btn btn-primary" href="{{ path('app_location_new') }}">
+            Create new
+        </a>
+    {% endif %}
 {% endblock %}
